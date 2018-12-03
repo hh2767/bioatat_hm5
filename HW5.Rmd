@@ -365,6 +365,8 @@ As the Residual vs Fitted plot shows, residuals forms a horizontal linear band a
 
 #Probelm5 Testing predictive ability
 
+##a) 10-fold cross-validation
+
 ```{r}
 set.seed(1)
 
@@ -380,17 +382,13 @@ model_cv <- train(`Life Exp` ~ Murder + `HS Grad` + Frost,
 
 model_cv$resample
 
-mean((model_cv$resample$Rsquared))
+mean((model_cv$resample$RMSE))
 ```
 
 ```{r}
 pred = predict(Model_S) %>% as.tibble()
 resid = residuals(Model_S) %>% as.tibble()
 
-
-boot_sample = function(df) {
-  sample_frac(df, replace = TRUE)
-}
 
 boot_mse = function(df, residual, predict){
 boot_resid = sample_frac(residual, replace = TRUE) #randomly resample the residuals (with replacement)
